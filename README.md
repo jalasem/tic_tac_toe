@@ -64,6 +64,5 @@ It's a draw
 
 -   [@jalasem](https://github.com/jalasem/)
 -   [@damiecode](https://github.com/damiecode/)
-=======
-# PROJECT: TIC TAC TOE
+
 
