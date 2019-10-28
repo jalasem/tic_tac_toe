@@ -7,10 +7,7 @@ require_relative '../lib/player.rb'
 
 class UserInterface
   def initialize
-    @game = GameManager.new
-    @board = @game.init_board(9)
-    @player1 = Player.new
-    @player2 = Player.new
+    @game = GameManager.new(@players)
   end
 
   #instructions to player
@@ -25,16 +22,12 @@ class UserInterface
     puts '--------------------------------'
     # Request for player names and save them to p1 and p2
     puts 'Player 1 please enter your name: '
-    @player1.name = gets.chomp
-    @player1.symbol = 'X'
+    @player_one = gets.chomp
 
     puts 'Player 2 please enter your name: '
-    @player2.name = gets.chomp
-    @player2.symbol = 'O'
+    @player_two = gets.chomp
 
-    puts "Player 1: #{@player1.name}, Symbol: #{@player1.symbol}"
-    puts "Player 2: #{@player2.name}, Symbol: #{@player2.symbol}"
-
+    puts "Player one X is #{@player_one} vs Player two O is #{@player_two}"
     p "Here's the board"
     display_board
   end
@@ -45,23 +38,23 @@ class UserInterface
 
   #Tic Tac Toe Board
   def display_board
-    puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "
+    puts " #{@game.board[0]} | #{@game.board[1]} | #{@game.board[2]} "
 
     puts ' ---------- '
 
-    puts " #{@board[3]} | #{@board[4]} | #{@board[5]} "
+    puts " #{@game.board[3]} | #{@game.board[4]} | #{@game.board[5]} "
 
     puts ' ---------- '
 
-    puts " #{@board[6]} | #{@board[7]} | #{@board[8]} "
+    puts " #{@game.board[6]} | #{@game.board[7]} | #{@game.board[8]} "
   end
 
   def position
     current = @game.current_player
-    if current == 'X'
-      print "\n #{@player1.name}, choose a position between 1-9: "
+    if current == :X
+      print "\n #{@player_one}, choose a position between 1-9: "
     else
-      print "\n #{@player2.name}, choose a position between 1-9: "
+      print "\n #{@player_two}, choose a position between 1-9: "
     end
   end
 
@@ -87,10 +80,10 @@ class UserInterface
   def play
     turn until @game.over?
       if @game.won?
-        if @board[@game.won?.first] == 'X'
-        puts "CONGRATULATIONS #{@player1.name}! You Won"
+        if @game.winner? == :X
+        puts "CONGRATULATIONS #{@player_one}! You Won"
         else
-          puts "CONGRATULATIONS #{@player2.name}! You Won"
+          puts "CONGRATULATIONS #{@player_two}! You Won"
         end
       elsif @game.draw?
         puts "It's a draw!"

@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
+require_relative './player.rb'
+
 class GameManager
-  def initialize
-    @board = nil
+  attr_reader :board, :player_one, :player_two, :X, :O
+  def initialize(players, board = (1..9).to_a)
+    @board = board
+    @player_one = Player.new(players)
+    @player_two = Player.new(players)
   end
 
   WIN_COMBINATIONS = [
@@ -24,16 +29,12 @@ class GameManager
     end
   end
 
-  def init_board(grid)
-    @board = Array.new(grid) { '-' }
-  end
-
-  def set_input(index, input = 'X')
+  def set_input(index, input = :X)
     @board[index] = input
   end
 
   def space_filled?(index)
-    @board[index] == 'X' || @board[index] == 'O'
+    @board[index] == :X || @board[index] == :O
   end
 
   def board_index(input_index)
@@ -45,14 +46,14 @@ class GameManager
   end
 
   def turn_count
-    @board.select { |e| e.include?('X') || e.include?('O') }.size
+    @board.select { |e| e == :X || e == :O }.size # rubocop:disable Style/MultipleComparison
   end
 
   def current_player
     player = if (turn_count % 2).zero?
-               'X'
+               :X
              else
-               'O'
+               :O
              end
     player
   end
@@ -67,5 +68,13 @@ class GameManager
 
   def over?
     won? || full? || draw?
+  end
+
+  def winner?
+    if @board[won?.first] == :X
+      :X
+    else
+      :O
+    end
   end
 end
