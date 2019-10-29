@@ -83,6 +83,7 @@ or it's draw.
 
 It's a draw
 ==== GAME END ====
+```
 
 #### Authors
 
