@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require '../lib/player.rb'
+require_relative '../lib/player.rb'
 
 RSpec.describe Player do
   let(:player1) { Player.new('Joe') }

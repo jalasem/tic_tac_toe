@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require '../lib/manager.rb'
-require '../lib/player.rb'
+require_relative '../lib/manager.rb'
+require_relative '../lib/player.rb'
 
 RSpec.describe GameManager do
   let(:game) { GameManager.new([Player.new('Joe'), Player.new('Bob')]) }
